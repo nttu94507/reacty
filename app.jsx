@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { createStore } from "redux"
+
 // class AddButton extends React.Component{
 //   constructor(props){
 //       super(props)
@@ -199,6 +201,33 @@ class MessageForm extends React.Component{
 ReactDOM.render(<MessageForm messageData={data} />, document.getElementById('root'))
 
 // ReactDOM.render(<MessageForm  />, document.getElementById('root'))
+
+
+
+//一開始拿到的資料
+// const data = {num : 1}
+//動作指令設定
+const addNum = article => ({ type: "addNum", payload: article })
+
+
+const rootReducer = (state = data, action) => {
+    //用switch.type來判斷指令為何
+    switch (action.type) {
+        case "addMessage":
+            break;
+            // return {num: state.num + action.payload }
+        default:
+            //沒有符合執行動作的條件就不做處理直接回傳
+            return state
+    }
+}
+
+//託付剛剛的一番辛苦完成的Reducer
+const store = createStore(rootReducer)
+//這邊多加了一個data是想讓大家確認原本的資料是不會變的！
+window.data = data;
+window.store = store;
+window.addNum = addNum;
 
 
 
