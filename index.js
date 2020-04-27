@@ -10,11 +10,18 @@ const data = {message:[{key:"1",name:'神Q',message:'嗨！大家好啊！'},
 //設定動作，雖然現在是空的
 const addMessage = article => ({type:'addMessage',payload:article})
 
-//將描述各個動作對資料的行為
+
+//Reducer
 const rootReducer = (state = data, action) => {
+    //由action傳入的事件判斷指令為何
     switch (action.type) {
+        //如果接收到addMessage的話
         case "addMessage":
-            break;
+            /*指定key值為現有長度+1，如果有刪除功能就不能這麼取了，
+            但現在沒有，所以就簡單做*/
+            action.payload.key = String(state.message.length+1)
+            //這裡把接收到的資料payload增加到message的陣列中，並回傳整個state的內容
+            return { ...state, message: [...state.message, action.payload] }
         default:
             return state
     }
@@ -27,4 +34,4 @@ const store = createStore(rootReducer)
 window.store = store;
 window.addMessage = addMessage;
 
-export default store
+export {store,addMessage}
