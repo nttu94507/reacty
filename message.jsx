@@ -3,12 +3,57 @@ import ReactDOM from "react-dom"
 import {store,addMessage} from "./index.js"
 import {connect,Provider} from "react-redux"
 
+
+class InputMessage extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = ({name:'',message:''})
+        this.changeState = this.changeState.bind(this)
+        this.clearMessage = this.clearMessage.bind(this)
+        this.submitMessage = this.submitMessage.bind(this)
+    }
+
+    changeState(event){
+        this.setState({[event.target.name]:event.target.value})
+    }
+
+    clearMessage(){
+        this.setState({name:'',message:''})
+    }
+
+    submitMessage(){
+        let messageData = {
+            key:'',
+            name:this.state.name,
+            message:this.state.message,
+        }
+        this.props.addMessage(messageData)
+        this.clearMessage()
+    }
+
+    render(){
+        return(
+            <div>
+                暱稱：<input type="text" name="name" 
+                            value={this.state.name}
+                            onChange={this.changeState} />
+                <br/>
+                訊息：
+                <br/><textarea name="message" 
+                                value={this.state.message}
+                                onChange={this.changeState}></textarea>
+                <input type="button" value="送出留言"
+                        onClick={this.submitMessage} />
+            </div>
+        )
+    }
+}
+
 class MessageList extends React.Component {
     render(){
         let message = this.props.data.map((item)=>{
-            return <li key={item.key}>{item.name}：{item.message}</li>
+            return <li>{item.name}：{item.message}</li>
         })
-        
         return(
             <ul>
                 {message}
@@ -45,55 +90,6 @@ class ConnectMessageForm extends React.Component {
         )
     }
 }
-
-
-
-class InputMessage extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = ({name:'',message:''})
-        this.clearMessage = this.clearMessage.bind(this)
-        this.changeState = this.changeState.bind(this)
-        this.submitMessage = this.submitMessage.bind(this)
-    }
-
-    changeState(event){
-        this.setState({[event.target.name]:event.target.value})
-    }
-
-    clearMessage(){
-        this.setState({name:'',message:''})
-    }
-
-    submitMessage(){
-        /*key值在這邊先給空的，新值會由reducer中處理給他*/
-        let messageData = {
-            key:'',
-            name:this.state.name,
-            message:this.state.message,
-        }
-        this.props.addMessage(messageData)
-        this.clearMessage()
-    }
-
-    render(){
-        return(
-            <div>
-                暱稱：<input type="text" name="name" 
-                            value={this.state.name}
-                            onChange={this.changeState} />
-                <br/>
-                訊息：
-                <br/><textarea name="message" 
-                                value={this.state.message}
-                                onChange={this.changeState}></textarea>
-                <input type="button" value="送出留言"
-                        onClick={this.submitMessage} />
-            </div>
-        )
-    }
-}
-
 const List = connect(mapStateToProps)(MessageList)
 //connect第一個參數是資料，第二個是事件之後把結果放到MessageForm中
 const MessageForm = connect(mapStateToProps,mapDispatchToProps)(ConnectMessageForm)
