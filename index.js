@@ -10,11 +10,6 @@ const data = {message:[{key:"1",name:'神Q',message:'嗨！大家好啊！'},
 
 //設定動作，雖然現在是空的
 const addMessage = article => ({type:'addMessage',payload:article})
-<<<<<<< HEAD
-
-
-=======
->>>>>>> adbb14a5ab2ebe922ba5e831e50a8b4d20d9a880
 //Reducer
 const rootReducer = (state = data, action) => {
     //由action傳入的事件判斷指令為何

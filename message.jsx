@@ -2,55 +2,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import {store,addMessage} from "./index.js"
 import {connect,Provider} from "react-redux"
-<<<<<<< HEAD
-
-
-class InputMessage extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = ({name:'',message:''})
-        this.changeState = this.changeState.bind(this)
-        this.clearMessage = this.clearMessage.bind(this)
-        this.submitMessage = this.submitMessage.bind(this)
-    }
-
-    changeState(event){
-        this.setState({[event.target.name]:event.target.value})
-    }
-
-    clearMessage(){
-        this.setState({name:'',message:''})
-    }
-
-    submitMessage(){
-        let messageData = {
-            key:'',
-            name:this.state.name,
-            message:this.state.message,
-        }
-        this.props.addMessage(messageData)
-        this.clearMessage()
-    }
-
-    render(){
-        return(
-            <div>
-                暱稱：<input type="text" name="name" 
-                            value={this.state.name}
-                            onChange={this.changeState} />
-                <br/>
-                訊息：
-                <br/><textarea name="message" 
-                                value={this.state.message}
-                                onChange={this.changeState}></textarea>
-                <input type="button" value="送出留言"
-                        onClick={this.submitMessage} />
-            </div>
-        )
-    }
-}
-=======
->>>>>>> adbb14a5ab2ebe922ba5e831e50a8b4d20d9a880
 
 class MessageList extends React.Component {
     render(){
@@ -65,33 +16,6 @@ class MessageList extends React.Component {
     }
 }
 
-<<<<<<< HEAD
-const mapStateToProps = state => {
-    return { data: state.message }       
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addMessage: article => dispatch(addMessage(article))
-      }    
-}
-
-
-class ConnectMessageForm extends React.Component {
-    render(){
-        return(
-            <div>
-                {/*把兩個組件放進來，一個需要資料一個需要事件
-                這裡用props來傳，因為ConnectMessageForm等等會被connect
-                資料也是傳到他的props中*/}
-                <InputMessage addMessage={this.props.addMessage} />
-                <MessageList data={this.props.data} />
-            </div>
-        )
-    }
-}
-
-=======
 
 
 //上方的data會被傳入這個function中的state
@@ -171,7 +95,6 @@ class InputMessage extends React.Component {
 
 const List = connect(mapStateToProps)(MessageList)
 //connect第一個參數是資料，第二個是事件之後把結果放到MessageForm中
->>>>>>> adbb14a5ab2ebe922ba5e831e50a8b4d20d9a880
 const MessageForm = connect(mapStateToProps,mapDispatchToProps)(ConnectMessageForm)
 
 ReactDOM.render(<Provider store={store}>
