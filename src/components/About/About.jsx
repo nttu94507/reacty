@@ -11,24 +11,25 @@ class About extends React.Component{
                 <li><Link to={`${this.props.match.url}/introd`}>理念介紹</Link></li>
                 <li><Link to={`${this.props.match.url}/his`}>歷史沿革</Link></li>
             </ul>
-            <Route exact path={`${this.props.match.path}/introd`} component={Introd} /> 
-            <Route exact path={`${this.props.match.path}/his`} component={His} /> 
+            <Route exact path={`${this.props.match.path}/:type`} component={Aboutcontent} /> 
         </div>
         )
     }
 }
 
-class Introd extends React.Component{
-    render() {
-        return <p>這裡是理念介紹</p>
+
+class Aboutcontent extends React.Component{
+    render(){
+        console.log(this.props.match)
+        let content
+        if (this.props.match.params.type == "introd")
+            content = "這裡是理念介紹"
+        else
+            content = "這裡是歷史沿革"   
+        
+        return(<p>{content}</p>)
     }
 }
 
-
-class His extends React.Component{
-    render() {
-        return <p>這裡是歷史沿革</p>
-    }
-}
 
 export {About}
